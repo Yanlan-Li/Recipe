@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <GridLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/main_sort"
+        android:layout_width="360sp"
+        android:layout_height="150sp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+
+        android:rowCount="2"
+        android:columnCount="5">
+
+       <LinearLayout
+           android:id="@+id/main_sort_jiachang"
+           android:layout_width="0dp"
+           android:layout_height="0dp"
+           android:layout_columnWeight ="1"
+           android:layout_rowWeight="1"
+           android:gravity="center"
+           android:layout_row="0"
+           android:layout_column="0"
+           android:orientation="vertical"
+           >
+
+           <ImageView
+               android:layout_width="32dp"
+               android:layout_height="38dp"
+               android:src="@mipmap/jiachang" />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="家常菜"
+               android:textColor="@color/black"/>
+       </LinearLayout>
+        <LinearLayout
+            android:id="@+id/main_sort_hongpei"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight ="1"
+            android:layout_rowWeight="1"
+            android:gravity="center"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="41dp"
+                android:layout_height="36dp"
+                android:src="@mipmap/hongpei" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="烘焙"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_sort_sucai"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight ="1"
+            android:layout_rowWeight="1"
+            android:gravity="center"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="33dp"
+                android:src="@mipmap/sucai" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="素菜"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/main_sort_liangcai"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight ="1"
+            android:layout_rowWeight="1"
+            android:gravity="center"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="34dp"
+                android:src="@mipmap/liangcai" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="凉菜"
+                android:textColor="@color/black"
+               android:layout_marginTop="1dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/main_sort_xiafan"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight ="1"
+            android:layout_rowWeight="1"
+            android:gravity="center"
+            android:layout_row="0"
+            android:layout_column="4"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="31dp"
+                android:src="@mipmap/xiafan" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下饭菜"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/main_sort_chuancai"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight ="1"
+            android:layout_rowWeight="1"
+            android:gravity="center"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="34dp"
+                android:src="@mipmap/huoguo" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="川菜"
+                android:textColor="@color/black"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_sort_mianshi"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="29dp"
+                android:layout_height="35dp"
+                android:src="@mipmap/mianshi" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="面条"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_sort_tang"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight ="1"
+            android:layout_rowWeight="1"
+            android:gravity="center"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="31dp"
+                android:layout_height="33dp"
+                android:src="@mipmap/tang" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="汤"
+                android:textColor="@color/black"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/main_sort_xican"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight ="1"
+            android:layout_rowWeight="1"
+            android:gravity="center"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="37dp"
+                android:layout_height="35dp"
+                android:src="@mipmap/xican" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="西式"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/main_sort_allsort"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight ="1"
+            android:layout_rowWeight="1"
+            android:gravity="center"
+            android:layout_row="1"
+            android:layout_column="4"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="33dp"
+                android:layout_height="32dp"
+                android:src="@mipmap/allsort" />
+            <TextView
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全部分类"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </GridLayout>
+</layout>

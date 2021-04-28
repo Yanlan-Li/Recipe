@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="searchActivity"
+            type="com.example.recipe.search.SearchActivity" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal"
+
+        android:background="#FF7256">
+
+        <ImageView
+            android:id="@+id/search_back_button"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:src="@mipmap/left" />
+
+
+        <LinearLayout
+            android:layout_width="290dp"
+            android:layout_height="33dp"
+            android:background="@color/white"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="10dp"
+            >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="6dp"
+                android:src="@mipmap/search3" />
+            <EditText
+                android:id="@+id/search_key"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:hint="搜索菜谱"
+                android:textSize="15dp"
+                android:background="@null"
+                />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="14dp"
+            android:textSize="15dp"/>
+
+    </LinearLayout>
+</layout>

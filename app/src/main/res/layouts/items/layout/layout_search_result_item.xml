@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="370dp"
+            android:layout_height="130dp"
+
+            android:layout_marginLeft="10dp"
+            >
+            <ImageView
+                android:id="@+id/search_item_img"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/mylike"
+                />
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+            <TextView
+                android:id="@+id/search_item_titile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="网红柠檬鸡爪"
+                android:textColor="#333333"/>
+                <TextView
+                    android:id="@+id/search_item_material"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                     android:text="鸡爪、白醋..."
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
