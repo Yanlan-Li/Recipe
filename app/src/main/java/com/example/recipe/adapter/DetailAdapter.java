@@ -15,33 +15,37 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recipe.BR;
 import com.example.recipe.R;
 import com.example.recipe.bean.Material;
 import com.example.recipe.bean.Recipe;
 import com.example.recipe.bean.Step;
+import com.example.recipe.util.DataTransfer;
 import com.example.recipe.util.HttpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailAdapter  extends RecyclerView.Adapter{
+public class DetailAdapter  extends RecyclerView.Adapter<DetailAdapter.ViewHolder>{
     List<Object> list;
     private int stepN;
     private int materialN;
     private String recipeTitle;
     private String recipeImg;
-    private LayoutInflater inflater;
+
     private static final int TOP = 0;
     private static final int TEXT1 = 1;
     private static final int MATERIAL= 2;
     private static final int TEXT2 = 3;
     private static final int STEP = 4;
-
+    private Context context;
     public DetailAdapter(Context context){
-        inflater = LayoutInflater.from(context);
+        this.context=context;
     }
 
 
@@ -62,8 +66,8 @@ public class DetailAdapter  extends RecyclerView.Adapter{
     public void setList(List<Object> list,int materialN,int stepN) {
         Log.d("TAG","Detail set adapter list");
         this.list = list;
-        recipeTitle=(String)list.get(0);
-        recipeImg=(String)list.get(1);
+        //recipeTitle=(Recipe)(list.get(0)).;
+        //recipeImg=(String)list.get(1);
         this.materialN=materialN;
         this.stepN=stepN;
         notifyDataSetChanged();
@@ -72,110 +76,69 @@ public class DetailAdapter  extends RecyclerView.Adapter{
     //创建ViewHolder
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case TOP:
-                View top= inflater.inflate(R.layout.layout_detail_top, parent, false);
-                return new topHolder(top);
+                ViewDataBinding topBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.layout_detail_top, parent, false);
+                DetailAdapter.ViewHolder topViewHolder = new DetailAdapter.ViewHolder(topBinding);
+                View sort=LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_detail_top,parent,false);
+                return topViewHolder;
             case TEXT1:
-                View text1 = inflater.inflate(R.layout.layout_detail_text1, parent, false);
-                return new text1Holder(text1);
+                ViewDataBinding text1Binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.layout_detail_text1, parent, false);
+                DetailAdapter.ViewHolder text1ViewHolder = new DetailAdapter.ViewHolder(text1Binding);
+                View text1=LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_detail_text1,parent,false);
+                return text1ViewHolder;
             case MATERIAL:
-                View material= inflater.inflate(R.layout.layout_detail_material, parent, false);
-                return new materialHolder(material);
+                ViewDataBinding materialBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.layout_detail_material, parent, false);
+                DetailAdapter.ViewHolder materialViewHolder = new DetailAdapter.ViewHolder(materialBinding);
+                View material=LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_detail_material,parent,false);
+                return materialViewHolder;
             case TEXT2:
-                View text2 = inflater.inflate(R.layout.layout_detail_text2, parent, false);
-                return new text2Holder(text2);
+                ViewDataBinding text2Binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.layout_detail_text2, parent, false);
+                DetailAdapter.ViewHolder text2ViewHolder = new DetailAdapter.ViewHolder(text2Binding);
+                View text2=LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_detail_text2,parent,false);
+                return text2ViewHolder;
             case STEP:
-                View step = inflater.inflate(R.layout.layout_detail_step, parent, false);
-                return new stepHolder(step);
+                ViewDataBinding stepBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.layout_detail_step, parent, false);
+                DetailAdapter.ViewHolder stepViewHolder = new DetailAdapter.ViewHolder(stepBinding);
+                View step=LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_detail_step,parent,false);
+                return stepViewHolder;
             default:
                 return null;
         }
     }
 
-
     //填充视图
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof topHolder) {
-            setTop(((topHolder)holder));
-        } else if (holder instanceof text1Holder) {
-        } else if (holder instanceof materialHolder) {
-            setMaterial((materialHolder)holder,position);
-        } else if (holder instanceof text2Holder) {
-            setText2((text2Holder) holder);
-        } else if (holder instanceof stepHolder) {
-            setStep((stepHolder)holder,position);
+    public void onBindViewHolder(DetailAdapter.ViewHolder holder, int position) {
+        if ( position == 0) {//top
+            holder.getBinding().setVariable(BR.recipe,list.get(position));
+        } else if (position==1) {//text1
+        } else if (position >=2&&position<materialN+2) {//material
+            holder.getBinding().setVariable(BR.material,list.get(position));
+        } else if (position ==materialN+2) {//text2
+            holder.getBinding().setVariable(BR.str,"(共"+stepN+"步)");
+        }else{
+            holder.getBinding().setVariable(BR.step,list.get(position));
         }
-
-    }
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-        if (manager instanceof GridLayoutManager) {
-            final GridLayoutManager gridManager = ((GridLayoutManager) manager);
-            gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    int type = getItemViewType(position);
-                   return 1;
-                }
-            });
-        }
+        holder.getBinding().executePendingBindings();
     }
 
-    public class topHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView detailImg;
-        private TextView detailTitle;
-        topHolder(View itemView) {
-            super(itemView);
-            detailImg=itemView.findViewById(R.id.detail_img);
-            detailTitle=itemView.findViewById(R.id.detail_name);
+        private ViewDataBinding binding;
+
+        public ViewHolder(ViewDataBinding binding){
+            super(binding.getRoot());
+            this.binding=binding;
         }
-    }
 
-    public class text1Holder extends RecyclerView.ViewHolder {
-        private LinearLayout layout;
-        public text1Holder(View itemView) {
-            super(itemView);
-            layout=itemView.findViewById(R.id.detail_text1);
+        public ViewDataBinding getBinding() {
+            return binding;
         }
-    }
 
-    public class materialHolder extends RecyclerView.ViewHolder {
-        private LinearLayout layout;
-        private TextView materialName;
-
-        public materialHolder(View itemView) {
-            super(itemView);
-             layout=itemView.findViewById(R.id.detail_material);
-            materialName=itemView.findViewById(R.id.detail_material_name);
-
-        }
-    }
-
-    public class text2Holder extends RecyclerView.ViewHolder {
-        private LinearLayout layout;
-        private TextView stepsNumber;
-        public text2Holder(View itemView) {
-            super(itemView);
-            layout=itemView.findViewById(R.id.detail_text2);
-            stepsNumber=itemView.findViewById(R.id.detail_step_number);
-        }
-    }
-
-    public class stepHolder extends RecyclerView.ViewHolder {
-
-        private TextView detailDescription;
-
-        public stepHolder(View itemView) {
-            super(itemView);
-
-           detailDescription=itemView.findViewById(R.id.detail_step_description);
-
+        public void setBinding(ViewDataBinding binding) {
+            this.binding = binding;
         }
     }
 
@@ -183,52 +146,6 @@ public class DetailAdapter  extends RecyclerView.Adapter{
     @Override
     public int getItemCount() {
         return list.size();
-    }
-
-    private void setText2(text2Holder holder){
-        holder.stepsNumber.setText("(共"+stepN+"步)");
-    }
-
-    private void setStep(stepHolder holder, int position){
-        //holder.detailImg.setImageResource(stepList.get(position).getStepImg());
-       holder.detailDescription.setText(((Step)list.get(position)).getStepCount()+"."+
-               ((Step)list.get(position)).getStepDescription());
-    }
-
-    private void setMaterial(materialHolder holder, int position){
-        holder.materialName.setText(((Material)list.get(position)).getMaterialName());
-    }
-
-    private void setTop(topHolder holder){
-        holder.detailTitle.setText(recipeTitle);
-        setImg(holder,recipeImg);
-    }
-
-    public void setImg(@NonNull topHolder  holder,String url){
-        @SuppressLint("HandlerLeak")Handler handler = new Handler() {
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    case 0:
-                        Log.d("TAG","detail handleMessage");
-                        Bitmap bmp=(Bitmap)msg.obj;
-                        holder.detailImg.setImageBitmap(bmp);
-                        break;
-                }
-            };
-        };
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                Bitmap bmp = HttpUtils.getURLimage(url);
-                Message msg = new Message();
-                msg.what = 0;
-                msg.obj = bmp;
-                Log.d("TAG","detail thread run");
-                handler.sendMessage(msg);
-            }
-        }).start();
     }
 
 }

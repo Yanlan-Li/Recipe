@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable
+            name="step"
+            type="com.example.recipe.bean.Step" />
     </data>
 
     <LinearLayout
@@ -20,7 +22,7 @@
            android:layout_height="wrap_content"
            android:textSize="18dp"
            android:textColor="@color/black"
-           android:text="1.中种材料放入面包机中"/>
+           android:text="@{step.stepDescription}"/>
 
     </LinearLayout>
 </layout>

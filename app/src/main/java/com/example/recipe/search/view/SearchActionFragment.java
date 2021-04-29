@@ -1,4 +1,4 @@
-package com.example.recipe.search;
+package com.example.recipe.search.view;
 
 import android.app.Activity;
 import android.content.Context;

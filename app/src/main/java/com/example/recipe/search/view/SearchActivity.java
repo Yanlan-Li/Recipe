@@ -1,35 +1,22 @@
-package com.example.recipe.search;
+package com.example.recipe.search.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.example.recipe.R;
-import com.example.recipe.adapter.SearchResultAdapter;
-import com.example.recipe.bean.Material;
-import com.example.recipe.bean.Recipe;
 import com.example.recipe.databinding.ActivitySearchBinding;
-import com.example.recipe.main.MainFragment;
-import com.example.recipe.sort.SortFragment;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class SearchActivity  extends AppCompatActivity implements View.OnClickListener,SearchActionFragment.FragmentInteraction {
+public class SearchActivity  extends AppCompatActivity implements View.OnClickListener, SearchActionFragment.FragmentInteraction {
    private ActivitySearchBinding binding;
     private Fragment mFrag1;
     private Fragment mFrag2;

@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.recipe.R;
+import com.example.recipe.databinding.FragmentMainBinding;
+import com.example.recipe.databinding.FragmentUserBinding;
 
 public class UserFragment extends Fragment {
-
+    FragmentUserBinding binding;
+    private View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,12 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding= FragmentUserBinding .inflate(inflater);
+        view = binding.getRoot();
+        return view;
+    }
 
-        return inflater.inflate(R.layout.fragment_user, container, false);
+    public void initView(){
+
     }
 }

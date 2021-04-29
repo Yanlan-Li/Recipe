@@ -6,7 +6,7 @@ public class User {
     private String userName;
     private String userPassword;
     private String userEmail;
-    private List<Recipe> userCollect;
+    private List<Integer> userCollect;
 
 
     public String getUserPassword() {
@@ -25,11 +25,11 @@ public class User {
         this.userEmail = userEmail;
     }
 
-    public List<Recipe> getUserCollect() {
+    public List<Integer> getUserCollect() {
         return userCollect;
     }
 
-    public void setUserCollect(List<Recipe> userCollect) {
+    public void setUserCollect(List<Integer> userCollect) {
         this.userCollect = userCollect;
     }
 

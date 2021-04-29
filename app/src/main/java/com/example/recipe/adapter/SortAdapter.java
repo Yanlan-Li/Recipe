@@ -1,23 +1,29 @@
 package com.example.recipe.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recipe.BR;
 import com.example.recipe.R;
-import com.example.recipe.bean.Material;
-import com.example.recipe.bean.Recipe;
 import com.example.recipe.bean.Sort;
+import com.example.recipe.search.view.SearchActivity;
 
 import java.util.List;
 
 public class SortAdapter extends RecyclerView.Adapter<SortAdapter.ViewHolder> {
     private List<Sort> list;
+    private Context context;
+    public SortAdapter(Context context){
+        this.context=context;
+    }
 
     public void setList(List<Sort> list) {
         this.list = list;
@@ -28,41 +34,27 @@ public class SortAdapter extends RecyclerView.Adapter<SortAdapter.ViewHolder> {
     @NonNull
     @Override
     public SortAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.layout_sort_item, parent, false);
-        return new SortAdapter.ViewHolder(view);
+        ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.layout_sort_item, parent, false);
+        SortAdapter.ViewHolder viewHolder = new SortAdapter.ViewHolder(binding);
+        View result=LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_sort_item,parent,false);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                int pos = viewHolder.getLayoutPosition();
+                Intent intent=new Intent(context, SearchActivity.class);
+                intent.putExtra("key",list.get(pos).getSortName());
+                context.startActivity(intent);
+
+            }
+        });
+        return viewHolder;
     }
 
-    //定义接口 OnItemClickListener
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
-    private SortAdapter.OnItemClickListener mOnItemClickListener;
-
-    public void setOnItemClickListener(SortAdapter.OnItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
-
-    }
-
-    //填充视图
     @Override
     public void onBindViewHolder(@NonNull SortAdapter.ViewHolder holder, int position) {
-        holder.sort.setText(list.get(position).getSortName());
-
-        //点击事件
-        if (mOnItemClickListener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = holder.getLayoutPosition();
-                    // 这里利用回调来给RecyclerView设置点击事件
-                    mOnItemClickListener.onItemClick(holder.itemView, pos);
-
-                }
-            });
-
-        }
+        holder.getBinding().setVariable(BR.sort,list.get(position));
+        holder.getBinding().executePendingBindings();
     }
 
     //返回item个数
@@ -71,13 +63,17 @@ public class SortAdapter extends RecyclerView.Adapter<SortAdapter.ViewHolder> {
         return list == null ? 0 : list.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView sort;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            sort = itemView.findViewById(R.id.sort);
-
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        private ViewDataBinding binding;
+        public ViewHolder(ViewDataBinding binding){
+            super(binding.getRoot());
+            this.binding=binding;
+        }
+        public ViewDataBinding getBinding() {
+            return binding;
+        }
+        public void setBinding(ViewDataBinding binding) {
+            this.binding = binding;
         }
     }
 }

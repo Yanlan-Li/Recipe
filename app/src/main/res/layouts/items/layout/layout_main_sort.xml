@@ -2,6 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <variable
+            name="itemClick"
+            type="com.example.recipe.main.MainFragment.RecyclerBindClick" />
 
     </data>
 
@@ -26,6 +29,7 @@
            android:layout_row="0"
            android:layout_column="0"
            android:orientation="vertical"
+           android:onClick="@{itemClick::sortClick}"
            >
 
            <ImageView
@@ -35,7 +39,7 @@
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="家常菜"
+               android:text="家常"
                android:textColor="@color/black"/>
        </LinearLayout>
         <LinearLayout
@@ -47,7 +51,8 @@
             android:gravity="center"
             android:layout_row="0"
             android:layout_column="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{itemClick::sortClick}">
 
             <ImageView
                 android:layout_width="41dp"
@@ -69,7 +74,8 @@
             android:gravity="center"
             android:layout_row="0"
             android:layout_column="2"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{itemClick::sortClick}">
 
             <ImageView
                 android:layout_width="28dp"
@@ -91,7 +97,8 @@
             android:gravity="center"
             android:layout_row="0"
             android:layout_column="3"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{itemClick::sortClick}">
 
             <ImageView
                 android:layout_width="32dp"
@@ -113,7 +120,8 @@
             android:gravity="center"
             android:layout_row="0"
             android:layout_column="4"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{itemClick::sortClick}">
 
             <ImageView
                 android:layout_width="32dp"
@@ -135,7 +143,8 @@
             android:gravity="center"
             android:layout_row="1"
             android:layout_column="0"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{itemClick::sortClick}">
 
             <ImageView
                 android:layout_width="54dp"
@@ -158,7 +167,8 @@
             android:layout_column="1"
             android:layout_columnWeight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{itemClick::sortClick}">
 
             <ImageView
                 android:layout_width="29dp"
@@ -168,7 +178,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="面条"
+                android:text="面"
                 android:layout_marginTop="2dp"
                 android:textColor="@color/black" />
         </LinearLayout>
@@ -182,7 +192,8 @@
             android:gravity="center"
             android:layout_row="1"
             android:layout_column="2"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{itemClick::sortClick}">
 
             <ImageView
                 android:layout_width="31dp"
@@ -204,7 +215,8 @@
             android:gravity="center"
             android:layout_row="1"
             android:layout_column="3"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{itemClick::sortClick}">
 
             <ImageView
                 android:layout_width="37dp"
@@ -225,7 +237,8 @@
             android:gravity="center"
             android:layout_row="1"
             android:layout_column="4"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{itemClick::sortClick}">
 
             <ImageView
                 android:layout_width="33dp"

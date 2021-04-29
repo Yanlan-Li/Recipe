@@ -4,7 +4,7 @@
     <data>
         <variable
             name="searchActivity"
-            type="com.example.recipe.search.SearchActivity" />
+            type="com.example.recipe.search.view.SearchActivity" />
 
     </data>
 

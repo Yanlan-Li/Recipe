@@ -6,9 +6,6 @@
 
     <data>
         <variable
-            name="sortFragment"
-            type="com.example.recipe.sort.SortFragment" />
-        <variable
             name="viewModel"
             type="com.example.recipe.sort.SortViewModel" />
 

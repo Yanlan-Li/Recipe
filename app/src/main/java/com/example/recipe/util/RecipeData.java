@@ -1,6 +1,6 @@
-package com.example.recipe.bean;
+package com.example.recipe.util;
 
-public class Data {
+public class RecipeData {
     private int recipe_id;
     private String recipe_title;
     private String recipe_img_url;

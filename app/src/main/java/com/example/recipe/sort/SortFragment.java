@@ -1,14 +1,14 @@
 package com.example.recipe.sort;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,15 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.recipe.DetailActivity;
+import com.example.recipe.MainActivity;
 import com.example.recipe.R;
 import com.example.recipe.adapter.SortAdapter;
 import com.example.recipe.bean.Sort;
 import com.example.recipe.databinding.FragmentSortBinding;
-import com.example.recipe.search.SearchActivity;
-import com.example.recipe.search.SearchResultFragment;
+import com.example.recipe.search.view.SearchActivity;
+import com.example.recipe.search.viewmodel.SearchResultViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,46 +32,32 @@ public class SortFragment extends Fragment implements View.OnClickListener{
     private FragmentSortBinding binding;
     private RecyclerView recyclerView;
     private SortAdapter adapter;
-    private List<Sort> list;
     private View view;
+    SortViewModel viewModel;
+    MainActivity mActivity;
 
-    private SortModel model;
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        Log.e("TAG", "onAttach: start" );
+        super.onAttach(context);
+        mActivity=(MainActivity) context;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding=FragmentSortBinding.inflate(inflater);
         view = binding.getRoot();
-       // SortViewModel mainViewModel=new SortViewModel(getActivity().getApplication());//实例化ViewModel
-        //mainViewModel=ViewModelProviders.of(this).get(MainViewModel);
-        //binding.setViewModel(mainViewModel);
-        model=new SortModel();
         initView();
-        initData();
-        initClick();
         return view;
     }
 
 
-    private void initClick(){
-        binding.sortSearch.setOnClickListener(this);
-        adapter.setOnItemClickListener(new SortAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                TextView textView=view.findViewById(R.id.sort);
-                String key=textView.getText().toString();
-                Intent intent=new Intent(getActivity(), SearchActivity.class);
-                intent.putExtra("key",key);
-                startActivity(intent);
-            }
-        });
-    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -86,18 +71,14 @@ public class SortFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initView() {//初始化recyclerview
-        recyclerView=view.findViewById(R.id.classify_rv);
-        adapter=new SortAdapter();
+        recyclerView=binding.classifyRv;
+        adapter=new SortAdapter(getActivity());
         //设置布局管理器
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));//网格布局
         //设置adapter
         recyclerView.setAdapter(adapter);
-    }
-
-    private void initData() {
-        list= model.getSortList();
-        //设置Item增加
-        adapter.setList(list);
+        viewModel=new SortViewModel(mActivity.getApplication(),binding);
+        binding.setViewModel(viewModel);
     }
 
 

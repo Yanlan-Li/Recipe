@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
   <data>
-
+    <variable
+        name="sort"
+        type="com.example.recipe.bean.Sort" />
   </data>
 <LinearLayout
     android:layout_width="match_parent"
@@ -14,10 +16,9 @@
       android:gravity="center"
       >
     <TextView
-        android:id="@+id/sort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="细节"
+        android:text="@{sort.sortName}"
         android:textSize="17dp"/>
  </LinearLayout>
 </LinearLayout>

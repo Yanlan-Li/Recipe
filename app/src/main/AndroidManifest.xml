@@ -20,8 +20,8 @@
         <activity android:name=".user.view.LoginActivity" /> <!-- <activity android:name=".RegisterActivity"></activity> -->
         <!-- <activity android:name=".user.UserInforActivity" /> -->
         <!-- <activity android:name=".LoginActivity" /> -->
-        <activity android:name=".DetailActivity" />
-        <activity android:name=".search.SearchActivity" />
+        <activity android:name=".detail.DetailActivity" />
+        <activity android:name=".search.view.SearchActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

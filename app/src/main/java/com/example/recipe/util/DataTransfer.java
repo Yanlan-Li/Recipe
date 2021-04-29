@@ -1,35 +1,48 @@
 package com.example.recipe.util;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Message;
+import android.util.Log;
 
-import com.example.recipe.bean.Data;
 import com.example.recipe.bean.Material;
 import com.example.recipe.bean.Recipe;
 import com.example.recipe.bean.Step;
 
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Handler;
 
 public class DataTransfer {
+    //将输入流转换为String
+    public static String streamToString(InputStream stream){
+        byte[] bytes=null;
+        try{
+            ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
+            byte[] buffer=new byte[1024];
+            int len=0;
+            while((len=stream.read(buffer))!=-1){
+                outputStream.write(buffer,0,len);
+            }
+            outputStream.close();
+            stream.close();
+            bytes=outputStream.toByteArray();
+        }catch (Exception e){
+            Log.e("MYTAG", "streaToString失败，MESSAGE="+e.getMessage());
 
-    public static  List<Recipe> DataToRecipe(List<Data> dataList){
+        }
+        return new String(bytes);
+    }
+
+    public static  List<Recipe> DataToRecipe(List<RecipeData> recipeDataList){
         List<Recipe> recipeList=new ArrayList<>();
-        for(int i=0;i<dataList.size();i++){
-            Data data=dataList.get(i);
+        for(int i = 0; i< recipeDataList.size(); i++){
+            RecipeData recipeData = recipeDataList.get(i);
             Recipe recipe=new Recipe();
-            recipe.setRecipeId(data.getRecipe_id());
-            recipe.setRecipeTitle(data.getRecipe_title());
-            recipe.setRecipeImg(data.getRecipe_img_url());
-            recipe.setRecipeMaterials(StringToMaterial(data.getRecipe_material()));
-            recipe.setRecipeSteps(StringToStep(data.getRecipe_step(),data.getRecipe_id()));
+            recipe.setRecipeId(recipeData.getRecipe_id());
+            recipe.setRecipeTitle(recipeData.getRecipe_title());
+            recipe.setRecipeImg(recipeData.getRecipe_img_url());
+            recipe.setRecipeMaterials(StringToMaterial(recipeData.getRecipe_material()));
+            recipe.setRecipeSteps(StringToStep(recipeData.getRecipe_step(), recipeData.getRecipe_id()));
             recipeList.add(recipe);
         }
         return recipeList;
@@ -54,14 +67,27 @@ public class DataTransfer {
         for(int i=0;i<list.size();i++){
             Step step=new Step();
             step.setStepId(recipeId);
-            step.setStepCount(i+1);
-            step.setStepDescription(list.get(i));
+            step.setStepDescription(i+1+"、"+list.get(i));
             stepList.add(step);
         }
         return  stepList;
     }
 
+    public static List<Object> RecipeToObject(List<Recipe> recipeList) {
+        List<Object> list=new ArrayList<>();
+        for(int i=0;i<recipeList.size();i++){
+            list.add(recipeList.get(i));
+        }
+        return list;
+    }
 
-
+    public static String MaterialToString(List<Material> materialList){
+        String materials="";
+        for(int i=0;i<materialList.size();i++) {
+           materials += materialList.get(i).getMaterialName();
+            if(i!=materialList.size()-1) materials+="、";
+        }
+        return materials;
+    }
 
 }

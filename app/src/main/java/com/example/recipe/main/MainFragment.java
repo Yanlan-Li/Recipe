@@ -6,10 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -20,19 +18,8 @@ import android.view.ViewGroup;
 import com.example.recipe.MainActivity;
 import com.example.recipe.R;
 import com.example.recipe.adapter.MainAdapter;
-import com.example.recipe.bean.Data;
-import com.example.recipe.bean.Recipe;
-import com.example.recipe.bean.Sort;
 import com.example.recipe.databinding.FragmentMainBinding;
-import com.example.recipe.DetailActivity;
-import com.example.recipe.search.SearchActionFragment;
-import com.example.recipe.search.SearchActivity;
-import com.example.recipe.sort.SortFragment;
-import com.example.recipe.util.DataTransfer;
-import com.example.recipe.util.HttpUtils;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.recipe.search.view.SearchActivity;
 
 
 public class MainFragment extends Fragment implements View.OnClickListener{
@@ -40,9 +27,11 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     private FragmentMainBinding binding;
     private RecyclerView mainRecyclerView;
     private MainAdapter adapter;
-    private List<Recipe> recipeList;
     private View view;
+    MainViewModel viewModel;
     private MainFragment.FragmentInteraction listerner;
+    MainActivity mActivity;
+
 
     //  定义了所有activity必须实现的接口方法
     public interface FragmentInteraction {
@@ -51,6 +40,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        mActivity=(MainActivity) context;
         if(context instanceof MainFragment.FragmentInteraction) {
             listerner = (MainFragment.FragmentInteraction)context; // 2.2 获取到宿主activity并赋值
         } else{
@@ -77,20 +67,19 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         binding= FragmentMainBinding .inflate(inflater);
         view = binding.getRoot();
         initView();
-        initData();
-        initClick();
+       // initClick();
         return view;
     }
-    private void initClick(){
-        binding.mainSearch.setOnClickListener(this);
-        adapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
-            @Override
-            public void onSortClick(View view, int position) {
-                Log.i("Main","Sort click");
-                String searchKey="";
+
+    //presenter控制点击事件
+    public class RecyclerBindClick implements BindingClick {
+        public void sortClick(View view) {
+            Log.i("Main","Sort click");
+            //Toast.makeText(getActivity(), "click", Toast.LENGTH_SHORT).show();
+            String searchKey="";
                 switch (view.getId()){
                     case R.id.main_sort_jiachang:
-                        searchKey="家常菜";
+                        searchKey="家常";
                         break;
                     case R.id.main_sort_hongpei:
                         searchKey="烘培";
@@ -102,10 +91,10 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                         searchKey="川菜";
                         break;
                     case R.id.main_sort_sucai:
-                        searchKey="素菜";
+                        searchKey="素";
                         break;
                     case R.id.main_sort_liangcai:
-                        searchKey="凉菜";
+                        searchKey="凉";
                         break;
                     case R.id.main_sort_tang:
                         searchKey="汤";
@@ -114,7 +103,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                         searchKey="西式";
                         break;
                     case R.id.main_sort_xiafan:
-                        searchKey="下饭菜";
+                        searchKey="下饭";
                         break;
                     case R.id.main_sort_allsort:
                        searchKey="";
@@ -127,8 +116,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                   }else{
                       listerner.searchActionProcess("turn to sort");
                   }
-            }
-        });
+        }
     }
 
     @Override
@@ -143,25 +131,19 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    private void initView() {//初始化recyclerview
+    private void initView() {
+        binding.mainSearch.setOnClickListener(this);
+
         adapter = new MainAdapter(getActivity());
+        adapter.setItemClick(new RecyclerBindClick());
         GridLayoutManager layoutManger = new GridLayoutManager(getActivity(), 2);
-        mainRecyclerView = view.findViewById(R.id.main_rv);
+        mainRecyclerView =binding.mainRv;
         mainRecyclerView.setLayoutManager(layoutManger);
         mainRecyclerView.setAdapter(adapter);
+        viewModel=new MainViewModel(mActivity.getApplication(),binding);
 
     }
 
-    private void initData() {
-        recipeList = new ArrayList<>();
 
-        List<Data> dataList= HttpUtils.getRandomRecipe(18);
-        Log.e("main introduce", "setData" );
-        List<Recipe> temp= DataTransfer.DataToRecipe(dataList);
-        for(int i=0;i<2;i++) recipeList.add(null);
-        for (int i = 2; i <temp.size()+2 ; i++)
-            recipeList.add(temp.get(i-2));
-        adapter.setList(recipeList);
-    }
 
 }

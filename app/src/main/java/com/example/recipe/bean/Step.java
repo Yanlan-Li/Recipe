@@ -5,9 +5,8 @@ import java.io.Serializable;
 //步骤
 public class Step implements Serializable {
     private int recipeId; //
-    private int stepCount;//第几步
-    private String stepDescription;
 
+    private String stepDescription;
 
     public int getStepId() {
         return recipeId;
@@ -15,14 +14,6 @@ public class Step implements Serializable {
 
     public void setStepId(int recipeId) {
         this.recipeId = recipeId;
-    }
-
-    public int getStepCount() {
-        return stepCount;
-    }
-
-    public void setStepCount(int stepCount) {
-        this.stepCount = stepCount;
     }
 
     public String getStepDescription() {

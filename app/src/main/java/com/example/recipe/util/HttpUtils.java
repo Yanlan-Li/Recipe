@@ -1,17 +1,11 @@
 package com.example.recipe.util;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.example.recipe.bean.Data;
-import com.example.recipe.util.Tools;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
@@ -40,7 +34,7 @@ public class HttpUtils {
             os.flush();
             os.close();
             if (connection.getResponseCode() == 200) {
-                result = Tools.streamToString(connection.getInputStream());
+                result = DataTransfer.streamToString(connection.getInputStream());
                 Log.d(TAG, "send: " + result);
                 return result;
             } else {
@@ -69,7 +63,7 @@ public class HttpUtils {
             connection.setConnectTimeout(5000);
             connection.addRequestProperty("Connection", "Keep-Alive");
             if (connection.getResponseCode() == 200) {
-                result = Tools.streamToString(connection.getInputStream());
+                result = DataTransfer.streamToString(connection.getInputStream());
                 Log.d(TAG, "send: " + result);
                 return result;
             } else {
@@ -107,10 +101,10 @@ public class HttpUtils {
 */
 
     //根据type获取菜谱列表
-    public static List<Data> getRecipeData(String key){
-        List<Data> recipeList=new ArrayList<>();
+    public static List<RecipeData> getRecipeByKey(String key){
+        List<RecipeData> recipeList=new ArrayList<>();
         Gson gson=new Gson();
-        String strUrl="http://47.106.76.106:8080/recipeSys/recipe/"+key;
+        String strUrl="http://47.106.76.106:8080/recipeSys/recipe/search?key="+key;
         Thread thread=new Thread(new Runnable() {
             @Override
             public void run() {
@@ -128,13 +122,13 @@ public class HttpUtils {
 
         if(resultStr.equals("error")||resultStr.equals("[]")) return null;
         else{
-            recipeList=gson.fromJson(resultStr,new TypeToken<List<Data>>(){}.getType());
+            recipeList=gson.fromJson(resultStr,new TypeToken<List<RecipeData>>(){}.getType());
             return recipeList;
         }
     }
     //随机获取n个菜谱
-    public static List<Data> getRandomRecipe(int n){
-        List<Data> recipeList=new ArrayList<>();
+    public static List<RecipeData> getRandomRecipe(int n){
+        List<RecipeData> recipeList=new ArrayList<>();
         Gson gson=new Gson();
         String strUrl="http://47.106.76.106:8080/recipeSys/randomRecipe?randomRecipeNumber="+n;
         Thread thread=new Thread(new Runnable() {
@@ -154,30 +148,10 @@ public class HttpUtils {
 
         if(resultStr.equals("error")||resultStr.equals("[]")) return null;
         else{
-            recipeList=gson.fromJson(resultStr,new TypeToken<List<Data>>(){}.getType());
+            recipeList=gson.fromJson(resultStr,new TypeToken<List<RecipeData>>(){}.getType());
             return recipeList;
         }
     }
-    //加载图片
-    public static Bitmap getURLimage(String url) {
 
-
-        Bitmap bmp = null;
-        try {
-            URL myurl = new URL(url);
-            // 获得连接
-            HttpURLConnection conn = (HttpURLConnection) myurl.openConnection();
-            conn.setConnectTimeout(6000000);//设置超时
-            conn.setDoInput(true);
-            conn.setUseCaches(false);//不缓存
-            conn.connect();
-            InputStream is = conn.getInputStream();//获得图片的数据流
-            bmp = BitmapFactory.decodeStream(is);
-            is.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bmp;
-    }
 
 }

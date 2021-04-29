@@ -1,5 +1,13 @@
 package com.example.recipe.bean;
 
+import android.graphics.Bitmap;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.example.recipe.util.DataTransfer;
+import com.squareup.picasso.Picasso;//Square公司出品的一款非常优秀的开源图片加载库
 import java.io.Serializable;
 import java.util.List;
 
@@ -49,5 +57,16 @@ public class Recipe implements Serializable {
 
     public void setRecipeSteps(List<Step> recipeSteps) {
         this.recipeSteps = recipeSteps;
+    }
+
+    @BindingAdapter("url")  //用来设置view的属性值,对某个控件进行复杂操作
+    public static void getImage(ImageView view, String url){
+        Picasso.with(view.getContext()).load(url).into(view);
+    }
+
+    @BindingAdapter("material")
+    public static void getMaterial(TextView textView, List<Material> materialList){
+        String s= DataTransfer.MaterialToString(materialList);
+        textView.setText(s);
     }
 }
